@@ -56,7 +56,7 @@ class MainActivity : Activity() {
 
     private fun openLiveSettings() {
         val i = if (Build.VERSION.SDK_INT >= 36)
-            Intent(Settings.ACTION_MANAGE_APP_PROMOTED_NOTIFICATIONS)
+            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
                 .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
         else
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
