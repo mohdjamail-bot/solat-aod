@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
@@ -72,9 +71,10 @@ class MainActivity : Activity() {
         var msg = "Tekan Mulakan untuk papar waktu solat seterusnya."
         if (Build.VERSION.SDK_INT >= 36) {
             val nm = getSystemService(NotificationManager::class.java)
-            if (!nm.canPostPromotedNotifications()) {
-                msg += "\n\nLive updates belum dibenarkan. Buka Tetapan Live updates."
-            }
+            msg += if (nm.canPostPromotedNotifications())
+                "\n\nLive updates: dibenarkan."
+            else
+                "\n\nLive updates: belum dibenarkan."
         }
         status.text = msg
     }

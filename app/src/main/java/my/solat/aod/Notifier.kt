@@ -1,12 +1,11 @@
 package my.solat.aod
 
-import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
+import androidx.core.app.NotificationCompat
 import java.text.SimpleDateFormat
 import java.util.Locale
 import java.util.TimeZone
@@ -30,11 +29,11 @@ object Notifier {
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
         )
 
-        val b = Notification.Builder(ctx, CH)
+        val n = NotificationCompat.Builder(ctx, CH)
             .setSmallIcon(R.drawable.ic_stat)
             .setContentTitle("$name $time")
             .setContentText("Waktu solat seterusnya")
-            .setStyle(Notification.BigTextStyle().bigText("$name pada $time"))
+            .setStyle(NotificationCompat.BigTextStyle().bigText("$name pada $time"))
             .setOngoing(true)
             .setOnlyAlertOnce(true)
             .setWhen(whenMs)
@@ -42,13 +41,10 @@ object Notifier {
             .setUsesChronometer(true)
             .setChronometerCountDown(true)
             .setContentIntent(open)
+            .setRequestPromotedOngoing(true)
+            .setShortCriticalText(time)
+            .build()
 
-        if (Build.VERSION.SDK_INT >= 36) {
-            b.addExtras(android.os.Bundle().apply {
-    putBoolean("android.requestPromotedOngoing", true)
-})
-            b.setShortCriticalText(time)
-        }
-        nm.notify(ID, b.build())
+        nm.notify(ID, n)
     }
 }
