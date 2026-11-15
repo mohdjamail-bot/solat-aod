@@ -56,7 +56,7 @@ class MainActivity : Activity() {
 
     private fun openLiveSettings() {
         val tries = listOf(
-            Intent("android.settings.APP_NOTIFICATION_PROMOTION_SETTINGS"),
+            Intent("android.settings.MANAGE_APP_PROMOTED_NOTIFICATIONS"),
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
         )
         for (i in tries) {
