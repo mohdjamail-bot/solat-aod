@@ -44,7 +44,9 @@ object Notifier {
             .setContentIntent(open)
 
         if (Build.VERSION.SDK_INT >= 36) {
-            b.setRequestPromotedOngoing(true)
+            b.addExtras(android.os.Bundle().apply {
+    putBoolean("android.requestPromotedOngoing", true)
+})
             b.setShortCriticalText(time)
         }
         nm.notify(ID, b.build())
