@@ -55,13 +55,17 @@ class MainActivity : Activity() {
     }
 
     private fun openLiveSettings() {
-        val i = if (Build.VERSION.SDK_INT >= 36)
+        val tries = listOf(
+            Intent("android.settings.APP_NOTIFICATION_PROMOTION_SETTINGS"),
             Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-        else
-            Intent(Settings.ACTION_APP_NOTIFICATION_SETTINGS)
-                .putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
-        startActivity(i)
+        )
+        for (i in tries) {
+            try {
+                i.putExtra(Settings.EXTRA_APP_PACKAGE, packageName)
+                startActivity(i)
+                return
+            } catch (e: Exception) { }
+        }
     }
 
     private fun updateStatus() {
